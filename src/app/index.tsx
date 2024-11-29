@@ -1,13 +1,15 @@
-import { Link, useRouter } from 'expo-router'
-import { ActivityIndicator, View } from 'react-native'
+import { useRouter } from 'expo-router'
+import { ActivityIndicator, View, Image } from 'react-native'
 
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 
-import { Activity, MessageSquare, UserRound, UsersRound } from '@/lib/icons'
+import { Activity, MessageSquare, UserRound } from '@/lib/icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
+import background from '@/assets/bg-welcome.png'
 
 export default function Screen() {
   const [isLoading, setIsLoading] = useState(true)
@@ -50,40 +52,41 @@ export default function Screen() {
   }
 
   return (
-    <View className="flex-1 justify-center items-center gap-5 py-10 bg-background px-6">
-      <SafeAreaView>
-        <View className="flex-1 justify-between gap-4">
-          <View className="ios:pt-8 pt-12">
-            <Text className="ios:text-left ios:font-black text-center text-3xl text-foreground font-bold">
-              Bem-vindo ao
-            </Text>
-            <Text className="ios:text-left ios:font-black text-primary text-2xl text-center font-bold">
-              CalorieCare
-            </Text>
+    <SafeAreaView className="flex-1 justify-center bg-background gap-12 px-8">
+      <View>
+        <Text className="text-center text-3xl text-foreground font-bold">
+          Bem-vindo ao
+        </Text>
+        <Text className="text-primary text-2xl text-center font-bold">
+          CalorieCare
+        </Text>
+      </View>
+
+      <View className="items-center">
+        <Image className="h-48 w-48" source={background} />
+      </View>
+
+      <View className="gap-4">
+        {FEATURES.map(feature => (
+          <View key={feature.title} className="flex-row gap-4">
+            <View className="pt-4">{feature.icon}</View>
+            <View className="flex-1">
+              <Text className="font-bold text-lg text-foreground">
+                {feature.title}
+              </Text>
+              <Text className="text-muted-foreground">
+                {feature.description}
+              </Text>
+            </View>
           </View>
-          <View className="gap-8">
-            {FEATURES.map(feature => (
-              <View key={feature.title} className="flex-row gap-4">
-                <View className="pt-px">{feature.icon}</View>
-                <View className="flex-1">
-                  <Text className="font-bold text-lg text-foreground">
-                    {feature.title}
-                  </Text>
-                  <Text className="text-muted-foreground">
-                    {feature.description}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-          <View className="gap-4">
-            <Button onPress={handleAcceptTerms}>
-              <Text>Continuar</Text>
-            </Button>
-          </View>
-        </View>
-      </SafeAreaView>
-    </View>
+        ))}
+      </View>
+      <View className="gap-4">
+        <Button onPress={handleAcceptTerms}>
+          <Text>Continuar</Text>
+        </Button>
+      </View>
+    </SafeAreaView>
   )
 }
 

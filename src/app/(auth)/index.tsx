@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, Image, View, Dimensions } from 'react-native'
+import { ActivityIndicator, Image, View, SafeAreaView } from 'react-native'
 
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
@@ -11,6 +11,7 @@ import background from '@/assets/bg-sign-in.png'
 import { useOAuth } from '@clerk/clerk-expo'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
+import { Link } from 'expo-router'
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -69,17 +70,18 @@ export default function SignIn() {
   }
 
   return (
-    <View className="flex-1 py-20 px-8 bg-background">
-      <View className="items-center gap-4">
-        <Utensils className="text-primary" size={44} />
+    <SafeAreaView className="flex-1 pt-32 px-8 bg-background">
+      <View className="items-center gap-2">
+        <Utensils className="text-primary" size={56} />
         <Text className="text-xl font-semibold">CalorieCare</Text>
+        <Text className="text-muted-foreground">Seu aliado na nutrição</Text>
       </View>
 
       <View className="flex-1 items-center justify-center">
-        <Image className="h-80 w-80" source={background} />
+        <Image className="h-64 w-64" source={background} />
       </View>
 
-      <View className="gap-3">
+      <View className="gap-3 py-12">
         <Button
           variant="outline"
           className="border-red-500"
@@ -109,7 +111,21 @@ export default function SignIn() {
           </Button>
         </View>
       </View>
-    </View>
+      <View className="py-4">
+        <Text className="pt-1 text-center text-foreground">
+          Ao continuar, você concorda com nossos{' '}
+          <Link href="/">
+            <Text className="text-muted-foreground">termos de serviço</Text>
+          </Link>{' '}
+          e{' '}
+          <Link href="/">
+            <Text className="text-muted-foreground">
+              políticas de privacidade.
+            </Text>
+          </Link>
+        </Text>
+      </View>
+    </SafeAreaView>
   )
 }
 
