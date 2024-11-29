@@ -50,9 +50,9 @@ export default function Screen() {
   }
 
   return (
-    <View className="flex-1 justify-center items-center gap-5 py-10 bg-background">
+    <View className="flex-1 justify-center items-center gap-5 py-10 bg-background px-6">
       <SafeAreaView>
-        <View className="mx-auto px-6 flex-1 justify-between gap-4">
+        <View className="flex-1 justify-between gap-4">
           <View className="ios:pt-8 pt-12">
             <Text className="ios:text-left ios:font-black text-center text-3xl text-foreground font-bold">
               Bem-vindo ao
@@ -77,22 +77,6 @@ export default function Screen() {
             ))}
           </View>
           <View className="gap-4">
-            <View className="items-center">
-              <UsersRound className="text-primary" size={24} />
-              <Text className="pt-1 text-center text-foreground">
-                Ao continuar, você concorda com nossos{' '}
-                <Link href="/">
-                  <Text className="text-primary">termos de serviço</Text>
-                </Link>{' '}
-                e{' '}
-                <Link href="/">
-                  <Text className="text-primary">
-                    políticas de privacidade.
-                  </Text>
-                </Link>
-              </Text>
-            </View>
-
             <Button onPress={handleAcceptTerms}>
               <Text>Continuar</Text>
             </Button>

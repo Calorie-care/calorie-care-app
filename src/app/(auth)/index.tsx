@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, Image, View, Dimensions } from 'react-native'
 
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 
 import { AppleIcon, FacebookIcon, GoogleIcon, Utensils } from '@/lib/icons'
+
+import background from '@/assets/bg-sign-in.png'
 
 import { useOAuth } from '@clerk/clerk-expo'
 import * as Linking from 'expo-linking'
@@ -67,48 +69,43 @@ export default function SignIn() {
   }
 
   return (
-    <View className="flex-1 justify-center bg-background">
-      <View className="px-6">
-        <View className="items-center gap-2 mb-10">
-          <View className="bg-green-500 p-4 rounded-full mb-4 shadow-lg">
-            <Utensils className="text-white" size={48} />
-          </View>
+    <View className="flex-1 py-20 px-8 bg-background">
+      <View className="items-center gap-4">
+        <Utensils className="text-primary" size={44} />
+        <Text className="text-xl font-semibold">CalorieCare</Text>
+      </View>
 
-          <Text className="text-3xl font-semibold">CalorieCare</Text>
+      <View className="flex-1 items-center justify-center">
+        <Image className="h-80 w-80" source={background} />
+      </View>
 
-          <Text className="text-muted-foreground text-center">
-            Seu companheiro de nutrição inteligente
-          </Text>
-        </View>
+      <View className="gap-3">
+        <Button
+          variant="outline"
+          className="border-red-500"
+          onPress={onGoogleSignIn}
+        >
+          <GoogleIcon size={20} className="text-red-500" />
+          <Text className="text-red-500 text-lg">Continue com o Google</Text>
+        </Button>
 
-        <Text className="text-center mb-4">Continuar com:</Text>
-
-        <View className="flex-row justify-between gap-3">
+        <View className="flex-row gap-3">
           <Button
             variant="outline"
-            className="flex-1 bg-white"
-            onPress={onGoogleSignIn}
-          >
-            <GoogleIcon size={20} className="text-muted-secondary" />
-            <Text className="text-muted-secondary">Google</Text>
-          </Button>
-
-          <Button
-            variant="outline"
-            className="flex-1 bg-blue-500"
+            className="flex-1 border-blue-500"
             onPress={onFacebookSignIn}
           >
-            <FacebookIcon size={20} className="text-white" />
-            <Text className="text-white">Facebook</Text>
+            <FacebookIcon size={20} className="text-blue-500" />
+            <Text className="text-blue-500 text-lg">Facebook</Text>
           </Button>
 
           <Button
             variant="outline"
-            className="flex-1 bg-primary-foreground"
+            className="flex-1 border-gray-400"
             onPress={onAppleSignIn}
           >
-            <AppleIcon size={20} className="text-foreground" />
-            <Text className="text-foreground">Apple</Text>
+            <AppleIcon size={20} className="text-gray-400" />
+            <Text className="text-gray-400 text-lg">Apple</Text>
           </Button>
         </View>
       </View>
