@@ -44,7 +44,7 @@ export default function RootLayout() {
       if (!isLoaded) return
 
       if (isSignedIn) {
-        router.replace('/(drawer)/home')
+        router.replace('/(tabs)')
       } else {
         router.replace('/')
       }

@@ -29,7 +29,7 @@ export default function SignIn() {
     try {
       setIsLoading(true)
 
-      const redirectUrl = Linking.createURL('/(drawer)/home')
+      const redirectUrl = Linking.createURL('/(tabs)')
 
       const oAuthFlow = await oAuthProvider.startOAuthFlow({ redirectUrl })
 
