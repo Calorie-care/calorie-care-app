@@ -2,7 +2,7 @@ import '../../global.css'
 
 import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { ActivityIndicator, Platform, View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 
 import { setAndroidNavigationBar } from '@/lib/androidNavigationBar'
 import { NAV_THEME } from '@/lib/constants'
@@ -43,10 +43,10 @@ export default function RootLayout() {
     useEffect(() => {
       if (!isLoaded) return
 
-      if (!isSignedIn) {
-        router.replace('/')
+      if (isSignedIn) {
+        router.replace('/(drawer)/home')
       } else {
-        // router.replace('/(drawer)/home')
+        router.replace('/')
       }
     }, [isSignedIn, isLoaded])
 
