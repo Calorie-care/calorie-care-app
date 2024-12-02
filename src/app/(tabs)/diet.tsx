@@ -121,6 +121,7 @@ export default function CreateDiet() {
       handleNextStep()
     } else {
       // handleCreateDiet(data)
+      router.push('/resume')
     }
 
     const completeData = {
