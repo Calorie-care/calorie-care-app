@@ -2,18 +2,11 @@ import { ScrollView, TouchableOpacity, View } from 'react-native'
 
 import { HeaderHome } from '@/components/HeaderHome'
 
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 import { Text } from '@/components/ui/text'
-
-import { BicepsFlexed } from '@/lib/icons/BicepsFlexed'
-import { Pencil } from '@/lib/icons/Pencil'
-import { Dumbbell } from '@/lib/icons/Dumbbell'
 import { Button } from '@/components/ui/button'
+
+import { BicepsFlexed, Pencil, Dumbbell } from '@/lib/icons'
 
 export default function Home() {
   return (
