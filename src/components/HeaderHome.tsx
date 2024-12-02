@@ -3,7 +3,7 @@ import { TouchableOpacity, View } from 'react-native'
 import { Text } from '@/components/ui/text'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-import { LogOut } from '@/lib/icons/LogOut'
+import { LogOut } from '@/lib/icons'
 
 import { useUser } from '@clerk/clerk-expo'
 

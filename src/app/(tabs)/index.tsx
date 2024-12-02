@@ -2,18 +2,12 @@ import { ScrollView, TouchableOpacity, View } from 'react-native'
 
 import { HeaderHome } from '@/components/HeaderHome'
 
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 import { Text } from '@/components/ui/text'
-
-import { BicepsFlexed } from '@/lib/icons/BicepsFlexed'
-import { Pencil } from '@/lib/icons/Pencil'
-import { Dumbbell } from '@/lib/icons/Dumbbell'
 import { Button } from '@/components/ui/button'
+
+import { BicepsFlexed, Pencil, Dumbbell } from '@/lib/icons'
+import { router } from 'expo-router'
 
 export default function Home() {
   return (
@@ -70,7 +64,12 @@ export default function Home() {
             é a melhor opção para garantir que você atinja seus objetivos com
             saúde, respeitando seu metabolismo e necessidades.
           </CardDescription>
-          <Button size="sm" variant="secondary" className="mt-3 mb-1">
+          <Button
+            size="sm"
+            variant="secondary"
+            className="mt-3 mb-1"
+            onPress={() => router.replace('/diet')}
+          >
             <Text>Gerar dieta</Text>
           </Button>
         </Card>
@@ -83,7 +82,12 @@ export default function Home() {
             veja receitas saudáveis, confira ingredientes, quantidades e etapas
             de preparo
           </CardDescription>
-          <Button size="sm" variant="secondary" className="mt-3 mb-1">
+          <Button
+            size="sm"
+            variant="secondary"
+            className="mt-3 mb-1"
+            onPress={() => router.replace('/recipes')}
+          >
             <Text>Conferir receitas</Text>
           </Button>
         </Card>
