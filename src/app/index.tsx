@@ -31,7 +31,7 @@ export default function Screen() {
         const accepted = await AsyncStorage.getItem('termsAccepted')
 
         if (accepted === 'true') {
-          router.replace('/(drawer)/home')
+          router.replace('/(tabs)')
         } else {
           setIsLoading(false)
         }
