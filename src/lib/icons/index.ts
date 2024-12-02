@@ -1,1 +1,8 @@
-
+export { Activity } from './Activity'
+export { MessageSquare } from './MessageSquare'
+export { UserRound } from './UserRound'
+export { UsersRound } from './UsersRound'
+export { AppleIcon } from './AppleIcon'
+export { GoogleIcon } from './GoogleIcon'
+export { FacebookIcon } from './FacebookIcon'
+export { Utensils } from './Utensils'
