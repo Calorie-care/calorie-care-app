@@ -1,13 +1,16 @@
 import { TextClassContext } from '@/components/ui/text'
 import { cn } from '@/lib/utils'
-import type { TextRef, ViewRef } from '@rn-primitives/types'
+import type { TextRef, ViewRef, ImageRef } from '@rn-primitives/types'
 import * as React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Image } from 'react-native'
 
 const Card = React.forwardRef<
   ViewRef,
-  React.ComponentPropsWithoutRef<typeof View>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof View> & {
+    image?: string | number
+    imageStyle?: object
+  }
+>(({ className, image, imageStyle, ...props }, ref) => (
   <View
     ref={ref}
     className={cn(
@@ -15,7 +18,15 @@ const Card = React.forwardRef<
       className
     )}
     {...props}
-  />
+  >
+    {image && (
+      <Image
+        source={typeof image === 'string' ? { uri: image } : image}
+        className="w-full h-32 rounded-t-lg"
+      />
+    )}
+    {props.children}
+  </View>
 ))
 Card.displayName = 'Card'
 
