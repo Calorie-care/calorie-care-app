@@ -1,7 +1,7 @@
+import { Header } from '@/components/Header'
+import { RecipeCard } from '@/components/ui/recipe-card-details'
 import { router } from 'expo-router'
 import { View } from 'react-native'
-import { Header } from '@/components/Header'
-import { RecipeCard } from '@/components/ui/recipe-card'
 
 export default function RecipeDetails() {
   return (
