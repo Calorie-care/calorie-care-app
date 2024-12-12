@@ -6,11 +6,32 @@ import {
 } from 'react-native'
 import { Text } from '@/components/ui/text'
 import { Header } from '@/components/Header'
-import { router } from 'expo-router'
-import { ScrollView } from 'react-native-gesture-handler'
-import { Card, CardHeader } from '@/components/ui/card'
-import React from 'react'
-import SearchInput from '@/components/ui/SearchInput'
+const recipeData = [
+  {
+    id: 1,
+    title: 'Arroz de Atum',
+    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
+    duration: 45,
+  },
+  {
+    id: 2,
+    title: 'Cookie americano',
+    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
+    duration: 40,
+  },
+  {
+    id: 3,
+    title: 'Salada proteica',
+    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
+    duration: 20,
+  },
+  {
+    id: 4,
+    title: 'Strogonoff de Carne',
+    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
+    duration: 60,
+  },
+]
 
 export default function Recipes() {
   return (
