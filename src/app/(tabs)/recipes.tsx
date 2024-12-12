@@ -1,11 +1,18 @@
+import { Header } from '@/components/Header'
+import { Card, CardHeader } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Text } from '@/components/ui/text'
+import { router } from 'expo-router'
+import { Search } from 'lucide-react-native'
+import React from 'react'
 import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
   View,
 } from 'react-native'
-import { Text } from '@/components/ui/text'
-import { Header } from '@/components/Header'
+import { FlatList, ScrollView } from 'react-native-gesture-handler'
+
 const recipeData = [
   {
     id: 1,
@@ -34,6 +41,16 @@ const recipeData = [
 ]
 
 export default function Recipes() {
+  const [search, setSearch] = React.useState('')
+
+  const filteredRecipes = recipeData.filter(recipe =>
+    recipe.title.toLowerCase().includes(search.toLowerCase())
+  )
+
+  function handleRecipePressed() {
+    router.replace('/recipe-details')
+  }
+
   return (
     <KeyboardAvoidingView
       className="flex-1"
@@ -41,25 +58,33 @@ export default function Recipes() {
       keyboardVerticalOffset={80}
     >
       <Header title="Receitas" />
-      {/* TODO: onSearch */}
       <View className="px-4 pt-4 bg-background">
-        <SearchInput />
+        <Input
+          label=""
+          placeholder="Pesquisar"
+          icon={<Search className="text-muted-foreground" />}
+          onChangeText={setSearch}
+        />
       </View>
-
-      <ScrollView className="p-4 bg-background">
-        {/* TODO: Ajustar fontes */}
-
-        <View className="gap-4">
-          <TouchableOpacity onPress={() => router.replace('/recipe-details')}>
-            <Card image={'https://i.ibb.co/yYY8Gnk/image-4.png'}>
-              <CardHeader>
-                <Text className="text-2xl">Arroz de Atum</Text>
-                <Text className="text-lg text-gray-500 font-bold">45 min</Text>
-              </CardHeader>
-            </Card>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      <View className="p-4 bg-background">
+        <FlatList
+          data={filteredRecipes}
+          keyExtractor={item => item.id.toString()}
+          contentContainerClassName="gap-4"
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={handleRecipePressed}>
+              <Card image={item.image}>
+                <CardHeader>
+                  <Text className="text-2xl">{item.title}</Text>
+                  <Text className="text-lg text-gray-500 font-bold">
+                    {item.duration} min
+                  </Text>
+                </CardHeader>
+              </Card>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
     </KeyboardAvoidingView>
   )
 }
