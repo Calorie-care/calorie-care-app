@@ -4,10 +4,14 @@ import { router } from 'expo-router'
 import { View } from 'react-native'
 
 export default function RecipeDetails() {
+  function handleActionHeader() {
+    router.push('/(tabs)/recipes')
+  }
+
   return (
     <View>
       {/* TODO: Titulo como nome da receita */}
-      <Header title="Receitas" />
+      <Header title="Receitas" action={handleActionHeader} />
 
       <RecipeCard />
     </View>
