@@ -6,12 +6,12 @@ import { router } from 'expo-router'
 import { Search } from 'lucide-react-native'
 import React from 'react'
 import {
+  FlatList,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
   View,
 } from 'react-native'
-import { FlatList, ScrollView } from 'react-native-gesture-handler'
 
 const recipeData = [
   {
