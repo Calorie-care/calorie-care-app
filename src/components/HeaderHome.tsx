@@ -5,10 +5,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { LogOut } from '@/lib/icons'
 
-import { useClerk } from '@clerk/clerk-expo'
+import { useClerk, useUser } from '@clerk/clerk-expo'
 
 export function HeaderHome() {
-  const { signOut, user } = useClerk()
+  const { user } = useUser()
+  const { signOut } = useClerk()
 
   const firstLetter = user?.firstName
     ? user.firstName.charAt(0).toUpperCase()

@@ -1,3 +1,4 @@
+import React from 'react'
 import { Controller } from 'react-hook-form'
 import { View, Text, TouchableOpacity } from 'react-native'
 
@@ -5,14 +6,12 @@ import { Label } from '@/components/ui/label'
 
 export function RadioButtonInput({
   control,
-
   required,
   label,
   name,
   options,
 }: {
   control: any
-  placeholder: string
   required?: boolean
   label: string
   name: string
@@ -49,12 +48,14 @@ export function RadioButtonInput({
     <Controller
       control={control}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <View className="w-full space-y-2">
-          <View className="flex-row justify-between">
+        <>
+          <View className="flex-row items-center justify-between">
             <Label className="font-normal py-1" nativeID="name">
               {label}
             </Label>
-            {error && <Text className="text-red-500">{error.message}</Text>}
+            {error && (
+              <Text className="text-red-500 text-sm">{error.message}</Text>
+            )}
           </View>
           <View className="flex-row flex-wrap gap-2">
             {options.map(option => (
@@ -67,7 +68,7 @@ export function RadioButtonInput({
               />
             ))}
           </View>
-        </View>
+        </>
       )}
       name={name}
       rules={{ required: required && 'Selecione uma opção' }}

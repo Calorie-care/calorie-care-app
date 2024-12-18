@@ -9,11 +9,13 @@ import { RadioButtonInput } from '@/components/RadioButtonInput'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const profileSchema = z.object({
   full_name: z.string().min(1, { message: 'Digite o seu nome completo' }),
   birthdate: z
     .string()
+    .min(1, 'A data de nascimento é obrigatória')
     .regex(/^\d{2}\/\d{2}\/\d{4}$/, {
       message: 'Data inválida. Use o formato DD/MM/AAAA',
     })
@@ -32,7 +34,7 @@ const profileSchema = z.object({
         const today = new Date()
         return inputDate <= today
       },
-      { message: 'Data deve ser válida e não pode ser no futuro' }
+      { message: 'Data inválida' }
     ),
   gender: z.string().min(1, { message: 'Selecione seu gênero' }),
 })
@@ -48,12 +50,8 @@ export default function CompleteYourAccount() {
 
   const birthdateRef = useRef<TextInput>(null)
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm<FormData>({
+  const { control, handleSubmit, setError, setValue } = useForm<FormData>({
+    resolver: zodResolver(profileSchema),
     defaultValues: {
       full_name: user?.fullName || '',
       birthdate: '',
@@ -117,49 +115,32 @@ export default function CompleteYourAccount() {
         </Text>
       </View>
 
-      <View className="gap-2">
-        <View>
-          <Controller
-            control={control}
-            name="full_name"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label="Nome completo *"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="Seu nome completo"
-                errorMessage={errors.full_name?.message}
-                returnKeyType="next"
-                onSubmitEditing={() => birthdateRef.current?.focus()}
-              />
-            )}
-          />
-        </View>
+      <View>
+        <Input
+          control={control}
+          name="full_name"
+          label="Nome completo *"
+          placeholder="Seu nome completo"
+          returnKeyType="next"
+          onSubmitEditing={() => birthdateRef.current?.focus()}
+        />
 
-        <View>
-          <Controller
-            control={control}
-            name="birthdate"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label="Data de nascimento *"
-                onBlur={onBlur}
-                onChangeText={text => onChange(applyDateMask(text))}
-                value={value}
-                placeholder="DD/MM/AAAA"
-                errorMessage={errors.birthdate?.message}
-                keyboardType="numeric"
-                ref={birthdateRef}
-                returnKeyType="done"
-              />
-            )}
-          />
-        </View>
+        <Input
+          control={control}
+          name="birthdate"
+          label="Data de nascimento *"
+          placeholder="DD/MM/AAAA"
+          onChangeText={text => {
+            const maskedText = applyDateMask(text)
+            setValue('birthdate', maskedText)
+          }}
+          keyboardType="numeric"
+          ref={birthdateRef}
+          returnKeyType="done"
+        />
 
         <RadioButtonInput
           control={control}
-          placeholder=""
           label="Gênero *"
           required
           name="gender"
