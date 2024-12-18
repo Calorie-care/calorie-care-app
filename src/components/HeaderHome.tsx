@@ -5,10 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { LogOut } from '@/lib/icons'
 
-import { useUser } from '@clerk/clerk-expo'
+import { useClerk } from '@clerk/clerk-expo'
 
 export function HeaderHome() {
-  const { user } = useUser()
+  const { signOut, user } = useClerk()
 
   const firstLetter = user?.firstName
     ? user.firstName.charAt(0).toUpperCase()
@@ -30,12 +30,12 @@ export function HeaderHome() {
         )}
         <View>
           <Text className="text-secondary">Olá,</Text>
-          <Text className="text-secondary font-semibold text-xl">Usuário</Text>
+          <Text className="text-secondary font-medium">{user?.firstName}</Text>
         </View>
       </View>
 
       <TouchableOpacity>
-        <LogOut className="text-secondary" />
+        <LogOut className="text-secondary" onPress={() => signOut()} />
       </TouchableOpacity>
     </View>
   )

@@ -24,7 +24,6 @@ import { set, z } from 'zod'
 import { ArrowRight, Check } from 'lucide-react-native'
 
 const personalInfoSchema = z.object({
-  gender: z.string().min(1, { message: 'Selecione seu gênero' }),
   objective: z.string().min(1, { message: 'Selecione o seu objetivo' }),
   level: z.string().min(1, { message: 'Selecione seu nível atual' }),
   weight: z.string().min(1, { message: 'Preencha o peso' }),
@@ -64,11 +63,6 @@ export default function CreateDiet() {
       currentStep === 'personal-info' ? personalInfoSchema : preferencesSchema
     ),
   })
-
-  const genderOptions = [
-    { label: 'Masculino', value: 'masculino' },
-    { label: 'Feminino', value: 'feminino' },
-  ]
 
   const levelOptions = [
     {
@@ -139,62 +133,6 @@ export default function CreateDiet() {
         className="px-8 py-4 bg-background"
       >
         <View className="gap-3 mb-2">
-          <Controller
-            control={control}
-            name="gender"
-            render={({ field: { onChange, value } }) => (
-              <DropdownMenu>
-                <View className="flex-row justify-between">
-                  <Text className="mb-1">Gênero</Text>
-                  {errors.gender && (
-                    <Text className="text-red-500">
-                      {errors.gender.message}
-                    </Text>
-                  )}
-                </View>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    ref={dropdownRef}
-                    variant="dropdown"
-                    onLayout={measureDropdownWidth}
-                  >
-                    <View className="flex flex-row items-center justify-between w-full">
-                      {value ? (
-                        <Text className="text-lg font-normal text-foreground">
-                          {
-                            genderOptions.find(option => option.value === value)
-                              ?.label
-                          }
-                        </Text>
-                      ) : (
-                        <Text className="text-lg font-normal">
-                          Escolha uma opção
-                        </Text>
-                      )}
-
-                      <ChevronDown className="text-muted-foreground ml-2" />
-                    </View>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="mt-1.5"
-                  style={{ width: menuWidth }}
-                >
-                  <DropdownMenuGroup>
-                    {genderOptions.map(option => (
-                      <DropdownMenuItem
-                        key={option.value}
-                        onSelect={() => onChange(option.value)}
-                      >
-                        <Text>{option.label}</Text>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-          />
-
           <Controller
             control={control}
             name="level"
