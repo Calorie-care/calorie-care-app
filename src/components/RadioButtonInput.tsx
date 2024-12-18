@@ -31,7 +31,7 @@ export function RadioButtonInput({
     return (
       <TouchableOpacity
         className={`border rounded-lg px-5 py-2 ${
-          isSelected ? 'bg-primary border-primary' : 'border-input'
+          isSelected ? 'bg-primary border-primary' : 'bg-card border-input'
         }`}
         onPress={() => onChange(value)}
       >

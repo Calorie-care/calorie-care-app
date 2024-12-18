@@ -1,6 +1,6 @@
-import { Text, View, type TextInput } from 'react-native'
+import { View, type TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useRouter } from 'expo-router'
 import { useUser } from '@clerk/clerk-expo'
 import { useEffect, useRef, useState } from 'react'
@@ -8,6 +8,8 @@ import { useEffect, useRef, useState } from 'react'
 import { RadioButtonInput } from '@/components/RadioButtonInput'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Text } from '@/components/ui/text'
+
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -154,7 +156,6 @@ export default function CompleteYourAccount() {
         <View className="py-8">
           <Button
             onPress={handleSubmit(handleUpdateProfile)}
-            disabled={isLoading}
             isLoading={isLoading}
           >
             <Text>Finalizar</Text>
