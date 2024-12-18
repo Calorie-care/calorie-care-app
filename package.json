@@ -15,7 +15,8 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@clerk/clerk-expo": "^2.3.11",
+    "@clerk/clerk-expo": "^2.6.4",
+    "@clerk/types": "^4.39.4",
     "@expo/vector-icons": "^14.0.2",
     "@hookform/resolvers": "^3.9.1",
     "@react-native-async-storage/async-storage": "1.23.1",

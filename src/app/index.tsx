@@ -19,7 +19,7 @@ export default function Screen() {
   const handleAcceptTerms = async () => {
     try {
       await AsyncStorage.setItem('termsAccepted', 'true')
-      router.replace('/(public)')
+      router.replace('/(auth)')
     } catch (error) {
       console.error('Failed to save terms accepted', error)
     }

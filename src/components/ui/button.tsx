@@ -18,7 +18,7 @@ const buttonVariants = cva(
           'web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
         link: 'web:underline-offset-4 web:hover:underline web:focus:underline ',
         dropdown:
-          'text-left border border-input bg-background web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
+          'text-left border border-input bg-card web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
       },
       size: {
         default: 'h-10 px-4 native:h-14 native:px-2.5',

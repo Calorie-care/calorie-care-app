@@ -1,7 +1,19 @@
-import { Tabs } from 'expo-router'
+import { useAuth, useUser } from '@clerk/clerk-expo'
+import { Redirect, Tabs } from 'expo-router'
 import { Apple, House, Soup } from 'lucide-react-native'
 
 export default function TabLayout() {
+  const { user } = useUser()
+  const { isSignedIn } = useAuth()
+
+  if (!isSignedIn) {
+    return <Redirect href="/(auth)" />
+  }
+
+  if (isSignedIn && user?.unsafeMetadata?.onboarding_completed !== true) {
+    return <Redirect href="/(auth)/complete-your-account" />
+  }
+
   return (
     <Tabs
       screenOptions={{
