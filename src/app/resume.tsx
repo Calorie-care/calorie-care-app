@@ -1,10 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 
 import { Header } from '@/components/Header'
 import { Text } from '@/components/ui/text'
@@ -15,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { MealCard } from '@/components/MealCard'
 import { Button } from '@/components/ui/button'
 import { router } from 'expo-router'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function Resume() {
   const { user } = useUser()
@@ -24,10 +19,11 @@ export default function Resume() {
     : ''
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}
+    <KeyboardAwareScrollView
+      contentContainerClassName="flex-grow bg-background"
+      extraHeight={100}
+      enableOnAndroid={true}
+      keyboardShouldPersistTaps="handled"
     >
       <Header
         title="Sua dieta"
@@ -101,6 +97,6 @@ export default function Resume() {
           Altere sua dieta conforme a sua necessidade
         </Text>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   )
 }

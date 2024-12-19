@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Text, View } from 'react-native'
 
-export function RecipeCard() {
+export function RecipeCard({ data }) {
   return (
     <View className="rounded-lg overflow-hidden shadow-lg m-4 bg-white">
       <Image
@@ -10,7 +10,7 @@ export function RecipeCard() {
       />
 
       <View className="p-4">
-        <Text className="text-2xl font-bold text-gray-800">Arroz de atum</Text>
+        <Text className="text-2xl font-bold text-gray-800">{data.name}</Text>
       </View>
 
       <View className="flex-row justify-between px-8 py-4 border-t border-b border-gray-200">

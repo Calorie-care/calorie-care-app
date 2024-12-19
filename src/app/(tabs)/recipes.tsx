@@ -1,17 +1,19 @@
 import { Header } from '@/components/Header'
-import { Card, CardHeader } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Text } from '@/components/ui/text'
 import { router } from 'expo-router'
 import { Search } from 'lucide-react-native'
 import React from 'react'
-import {
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { FlatList, TouchableOpacity, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+type RecipeProps = {
+  id: number
+  title: string
+  image: string
+  duration: number
+}
 
 const recipeData = [
   {
@@ -47,44 +49,48 @@ export default function Recipes() {
     recipe.title.toLowerCase().includes(search.toLowerCase())
   )
 
-  function handleRecipePressed() {
-    router.replace('/recipe-details')
+  function handleRecipePressed(data: RecipeProps) {
+    router.push(`/recipe-details/${encodeURIComponent(JSON.stringify(data))}`)
   }
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}
-    >
+    <>
       <Header title="Receitas" />
-      <View className="px-4 pt-4 bg-background">
+
+      <View className="px-8 pt-4 bg-background">
         <Input
-          label=""
           placeholder="Pesquisar"
           icon={<Search className="text-muted-foreground" />}
           onChangeText={setSearch}
         />
       </View>
-      <View className="p-4 bg-background">
+
+      <KeyboardAwareScrollView
+        className="flex-1 px-8 bg-background"
+        contentContainerStyle={{ paddingBottom: 16 }}
+        keyboardShouldPersistTaps="handled"
+      >
         <FlatList
           data={filteredRecipes}
           keyExtractor={item => item.id.toString()}
-          contentContainerClassName="gap-4"
+          keyboardShouldPersistTaps="handled"
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={handleRecipePressed}>
+            <TouchableOpacity
+              className="py-2"
+              onPress={() => handleRecipePressed(item)}
+            >
               <Card image={item.image}>
-                <CardHeader>
-                  <Text className="text-2xl">{item.title}</Text>
-                  <Text className="text-lg text-gray-500 font-bold">
+                <View className="py-2 px-4">
+                  <Text className="text-xl">{item.title}</Text>
+                  <Text className="text-muted-foreground font-semibold">
                     {item.duration} min
                   </Text>
-                </CardHeader>
+                </View>
               </Card>
             </TouchableOpacity>
           )}
         />
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
+    </>
   )
 }

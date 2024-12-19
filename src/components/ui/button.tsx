@@ -90,7 +90,7 @@ const Button = React.forwardRef<
       >
         <View className="flex flex-row gap-2 items-center justify-center">
           {isLoading ? (
-            <ActivityIndicator size="small" className="text-foreground" />
+            <ActivityIndicator size="small" className="text-background" />
           ) : (
             props.children
           )}
