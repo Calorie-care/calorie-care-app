@@ -130,7 +130,7 @@ export default function CreateDiet() {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        className="px-8 py-4 bg-background"
+        className="p-4 bg-background"
       >
         <View className="gap-3 mb-2">
           <Controller
@@ -286,7 +286,7 @@ export default function CreateDiet() {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        className="px-8 py-4 bg-background"
+        className="p-4 bg-background"
       >
         <View>
           <Input

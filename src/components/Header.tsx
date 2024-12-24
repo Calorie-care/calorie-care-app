@@ -1,6 +1,7 @@
 import { ChevronLeft } from '@/lib/icons'
 import { useRouter } from 'expo-router'
 import { Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 type HeaderProps = {
   title: string
@@ -20,7 +21,7 @@ export function Header({ title, action, label }: HeaderProps) {
   }
 
   return (
-    <View className="flex-row items-center gap-4 px-8 bg-primary pb-6 pt-16">
+    <SafeAreaView className="flex-row items-center gap-4 px-8 bg-primary pb-4 pt-6">
       <TouchableOpacity onPress={handleBackPress}>
         <ChevronLeft className="text-secondary" size={28} />
       </TouchableOpacity>
@@ -28,6 +29,6 @@ export function Header({ title, action, label }: HeaderProps) {
         <Text className="text-secondary font-bold text-xl">{title}</Text>
         {label && <View>{label}</View>}
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
