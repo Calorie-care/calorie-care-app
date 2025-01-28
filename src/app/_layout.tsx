@@ -37,6 +37,10 @@ export default function RootLayout() {
 
   const publishableKey = env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
 
+  if (!publishableKey) {
+    throw new Error('Missing Clerk public key')
+  }
+
   function InitialLayout() {
     const { isSignedIn, isLoaded } = useAuth()
 

@@ -18,13 +18,12 @@ import {
 import { Header } from '@/components/Header'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { router, useRouter } from 'expo-router'
+import { router } from 'expo-router'
 import { Controller, useForm } from 'react-hook-form'
-import { set, z } from 'zod'
+import { z } from 'zod'
 import { ArrowRight, Check } from 'lucide-react-native'
 
 const personalInfoSchema = z.object({
-  gender: z.string().min(1, { message: 'Selecione seu gênero' }),
   objective: z.string().min(1, { message: 'Selecione o seu objetivo' }),
   level: z.string().min(1, { message: 'Selecione seu nível atual' }),
   weight: z.string().min(1, { message: 'Preencha o peso' }),
@@ -49,7 +48,6 @@ export default function CreateDiet() {
   const [menuWidth, setMenuWidth] = useState(0)
 
   const dropdownRef = useRef(null)
-  const weightRef = useRef<TextInput>(null)
   const ageRef = useRef<TextInput>(null)
   const heightRef = useRef<TextInput>(null)
 
@@ -64,11 +62,6 @@ export default function CreateDiet() {
       currentStep === 'personal-info' ? personalInfoSchema : preferencesSchema
     ),
   })
-
-  const genderOptions = [
-    { label: 'Masculino', value: 'masculino' },
-    { label: 'Feminino', value: 'feminino' },
-  ]
 
   const levelOptions = [
     {
@@ -141,69 +134,15 @@ export default function CreateDiet() {
         <View className="gap-3 mb-2">
           <Controller
             control={control}
-            name="gender"
-            render={({ field: { onChange, value } }) => (
-              <DropdownMenu>
-                <View className="flex-row justify-between">
-                  <Text className="mb-1">Gênero</Text>
-                  {errors.gender && (
-                    <Text className="text-red-500">
-                      {errors.gender.message}
-                    </Text>
-                  )}
-                </View>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    ref={dropdownRef}
-                    variant="dropdown"
-                    onLayout={measureDropdownWidth}
-                  >
-                    <View className="flex flex-row items-center justify-between w-full">
-                      {value ? (
-                        <Text className="text-lg font-normal text-foreground">
-                          {
-                            genderOptions.find(option => option.value === value)
-                              ?.label
-                          }
-                        </Text>
-                      ) : (
-                        <Text className="text-lg font-normal">
-                          Escolha uma opção
-                        </Text>
-                      )}
-
-                      <ChevronDown className="text-muted-foreground ml-2" />
-                    </View>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="mt-1.5"
-                  style={{ width: menuWidth }}
-                >
-                  <DropdownMenuGroup>
-                    {genderOptions.map(option => (
-                      <DropdownMenuItem
-                        key={option.value}
-                        onSelect={() => onChange(option.value)}
-                      >
-                        <Text>{option.label}</Text>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-          />
-
-          <Controller
-            control={control}
             name="level"
             render={({ field: { onChange, value } }) => (
               <DropdownMenu>
-                <View className="flex-row justify-between">
+                <View className="flex-row items-center justify-between">
                   <Text className="mb-1">Seu nível de atividade física</Text>
                   {errors.level && (
-                    <Text className="text-red-500">{errors.level.message}</Text>
+                    <Text className="text-red-500 text-sm">
+                      {errors.level.message}
+                    </Text>
                   )}
                 </View>
                 <DropdownMenuTrigger asChild>
@@ -254,10 +193,10 @@ export default function CreateDiet() {
             name="objective"
             render={({ field: { onChange, value } }) => (
               <DropdownMenu>
-                <View className="flex-row justify-between">
+                <View className="flex-row items-center justify-between">
                   <Text className="mb-1">Seu objetivo</Text>
                   {errors.objective && (
-                    <Text className="text-red-500">
+                    <Text className="text-red-500 text-sm">
                       {errors.objective.message}
                     </Text>
                   )}
@@ -307,58 +246,35 @@ export default function CreateDiet() {
           />
         </View>
 
-        <Controller
+        <Input
           control={control}
           name="weight"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Peso"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Seu peso atual em kg"
-              keyboardType="numeric"
-              errorMessage={errors.weight?.message}
-              returnKeyType="next"
-              ref={weightRef}
-              onSubmitEditing={() => ageRef.current?.focus()}
-            />
-          )}
+          label="Peso"
+          placeholder="Seu peso atual em kg"
+          keyboardType="numeric"
+          returnKeyType="next"
+          onSubmitEditing={() => ageRef.current?.focus()}
         />
-        <Controller
+
+        <Input
           control={control}
           name="age"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Idade"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Sua idade"
-              keyboardType="numeric"
-              errorMessage={errors.age?.message}
-              ref={ageRef}
-              onSubmitEditing={() => heightRef.current?.focus()}
-            />
-          )}
+          label="Idade"
+          placeholder="Sua idade"
+          keyboardType="numeric"
+          ref={ageRef}
+          onSubmitEditing={() => heightRef.current?.focus()}
         />
+
         <View className="mb-32">
-          <Controller
+          <Input
             control={control}
             name="height"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label="Altura"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="Sua altura em cm"
-                keyboardType="numeric"
-                errorMessage={errors.height?.message}
-                returnKeyType="done"
-                ref={heightRef}
-              />
-            )}
+            label="Altura"
+            placeholder="Sua altura em cm"
+            keyboardType="numeric"
+            returnKeyType="done"
+            ref={heightRef}
           />
         </View>
       </ScrollView>
@@ -371,78 +287,76 @@ export default function CreateDiet() {
         showsVerticalScrollIndicator={false}
         className="px-8 py-4 bg-background"
       >
-        <Controller
-          control={control}
-          name="calories"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Quantidade de calorias"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Calorias totais"
-              keyboardType="numeric"
-              errorMessage={errors.calories?.message}
-              returnKeyType="next"
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="meals"
-          render={({ field: { onChange, value } }) => (
-            <DropdownMenu>
-              <View className="flex-row justify-between">
-                <Text className="mb-1">Em quantas refeições?</Text>
-                {errors.meals && (
-                  <Text className="text-red-500">{errors.meals.message}</Text>
-                )}
-              </View>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  ref={dropdownRef}
-                  variant="dropdown"
-                  onLayout={measureDropdownWidth}
-                >
-                  <View className="flex flex-row items-center justify-between w-full">
-                    {value ? (
-                      <Text className="text-lg font-normal text-foreground">
-                        {
-                          mealsOptions.find(option => option.value === value)
-                            ?.label
-                        }
-                      </Text>
-                    ) : (
-                      <Text className="text-lg font-normal">
-                        Escolha uma opção
-                      </Text>
-                    )}
+        <View>
+          <Input
+            control={control}
+            name="calories"
+            label="Quantidade de calorias"
+            placeholder="Calorias totais"
+            keyboardType="numeric"
+            returnKeyType="next"
+          />
+          <Controller
+            control={control}
+            name="meals"
+            render={({ field: { onChange, value } }) => (
+              <DropdownMenu>
+                <View className="flex-row items-center justify-between">
+                  <Text className="mb-1">Em quantas refeições?</Text>
+                  {errors.meals && (
+                    <Text className="text-red-500 text-sm">
+                      {errors.meals.message}
+                    </Text>
+                  )}
+                </View>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    ref={dropdownRef}
+                    variant="dropdown"
+                    onLayout={measureDropdownWidth}
+                  >
+                    <View className="flex flex-row items-center justify-between w-full">
+                      {value ? (
+                        <Text className="text-lg font-normal text-foreground">
+                          {
+                            mealsOptions.find(option => option.value === value)
+                              ?.label
+                          }
+                        </Text>
+                      ) : (
+                        <Text className="text-lg font-normal">
+                          Escolha uma opção
+                        </Text>
+                      )}
 
-                    <ChevronDown className="text-muted-foreground ml-2" />
-                  </View>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="mt-1.5"
-                style={{ width: menuWidth }}
-              >
-                <DropdownMenuGroup>
-                  {mealsOptions.map(option => (
-                    <DropdownMenuItem
-                      key={option.value}
-                      onSelect={() => onChange(option.value)}
-                    >
-                      <Text>{option.label}</Text>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                      <ChevronDown className="text-muted-foreground ml-2" />
+                    </View>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="mt-1.5"
+                  style={{ width: menuWidth }}
+                >
+                  <DropdownMenuGroup>
+                    {mealsOptions.map(option => (
+                      <DropdownMenuItem
+                        key={option.value}
+                        onSelect={() => onChange(option.value)}
+                      >
+                        <Text>{option.label}</Text>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          />
+          {errors.meals && (
+            <Text className="text-red-500 text-sm mt-1">
+              {errors.meals.message}
+            </Text>
           )}
-        />
-        {errors.meals && (
-          <Text className="text-red-500 mt-1">{errors.meals.message}</Text>
-        )}
+        </View>
 
         <View className="mt-4">
           <Text className="text-muted-foreground">
