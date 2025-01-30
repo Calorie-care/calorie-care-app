@@ -17,7 +17,7 @@ export default function Home() {
     >
       <HeaderHome />
 
-      <View className="px-8 py-4 gap-4">
+      <View className="p-4 gap-4">
         <Card className="p-2 items-center gap-2">
           <View className="flex-row gap-2 items-center">
             <Text className="text-primary font-medium text-xl">Sua meta</Text>

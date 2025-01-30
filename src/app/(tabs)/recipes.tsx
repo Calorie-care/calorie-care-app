@@ -1,90 +1,107 @@
+import { router } from 'expo-router'
+import { Clock, Flame, Search } from 'lucide-react-native'
+import React from 'react'
+import { FlatList, TouchableOpacity, View } from 'react-native'
+
 import { Header } from '@/components/Header'
-import { Card, CardHeader } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Text } from '@/components/ui/text'
-import { router } from 'expo-router'
-import { Search } from 'lucide-react-native'
-import React from 'react'
-import {
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native'
 
-const recipeData = [
-  {
-    id: 1,
-    title: 'Arroz de Atum',
-    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
-    duration: 45,
-  },
-  {
-    id: 2,
-    title: 'Cookie americano',
-    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
-    duration: 40,
-  },
-  {
-    id: 3,
-    title: 'Salada proteica',
-    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
-    duration: 20,
-  },
-  {
-    id: 4,
-    title: 'Strogonoff de Carne',
-    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
-    duration: 60,
-  },
-]
+import { RECIPES } from '@/storage/mockedData'
+
+type RecipeProps = {
+  id: number
+  title: string
+  image: string
+  cal: string
+  duration: string
+  proteins: string
+  fats: string
+  carbs: string
+  ingredients: string[]
+  preparation: string[]
+}
 
 export default function Recipes() {
   const [search, setSearch] = React.useState('')
 
-  const filteredRecipes = recipeData.filter(recipe =>
+  const filteredRecipes = RECIPES.filter(recipe =>
     recipe.title.toLowerCase().includes(search.toLowerCase())
   )
 
-  function handleRecipePressed() {
-    router.replace('/recipe-details')
+  function handleRecipePressed(data: RecipeProps) {
+    router.navigate({
+      pathname: '/recipe-details',
+      params: {
+        id: data.id,
+        title: data.title,
+        image: data.image,
+        cal: data.cal,
+        duration: data.duration,
+        proteins: data.proteins,
+        fats: data.fats,
+        carbs: data.carbs,
+        ingredients: data.ingredients,
+        preparation: data.preparation,
+      },
+    })
   }
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}
-    >
+    <>
       <Header title="Receitas" />
+
       <View className="px-4 pt-4 bg-background">
         <Input
-          label=""
           placeholder="Pesquisar"
           icon={<Search className="text-muted-foreground" />}
           onChangeText={setSearch}
         />
       </View>
-      <View className="p-4 bg-background">
-        <FlatList
-          data={filteredRecipes}
-          keyExtractor={item => item.id.toString()}
-          contentContainerClassName="gap-4"
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={handleRecipePressed}>
-              <Card image={item.image}>
-                <CardHeader>
-                  <Text className="text-2xl">{item.title}</Text>
-                  <Text className="text-lg text-gray-500 font-bold">
-                    {item.duration} min
-                  </Text>
-                </CardHeader>
-              </Card>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-    </KeyboardAvoidingView>
+
+      <FlatList
+        data={filteredRecipes}
+        className="flex-1 px-4 bg-background"
+        keyExtractor={item => item.id.toString()}
+        keyboardShouldPersistTaps="handled"
+        contentContainerClassName="pb-4"
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            className="py-2"
+            onPress={() => handleRecipePressed(item)}
+          >
+            <Card image={item.image}>
+              <View className="py-2 px-4">
+                <View className="flex-row justify-between items-center">
+                  <Text className="text-xl font-medium">{item.title}</Text>
+                  <View>
+                    <View className="flex-row items-center">
+                      <Flame
+                        className="text-muted-foreground mr-1.5"
+                        size={14}
+                      />
+
+                      <Text className="text-muted-foreground">
+                        {item.cal} cal
+                      </Text>
+                    </View>
+                    <View className="flex-row items-center">
+                      <Clock
+                        className="text-muted-foreground mr-1.5"
+                        size={14}
+                      />
+                      <Text className="text-muted-foreground">
+                        {item.duration} min
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </Card>
+          </TouchableOpacity>
+        )}
+      />
+    </>
   )
 }

@@ -14,7 +14,7 @@ const Card = React.forwardRef<
   <View
     ref={ref}
     className={cn(
-      'rounded-lg border border-border bg-card shadow-sm shadow-foreground/10',
+      'rounded-md border border-border bg-card shadow-sm shadow-foreground/10',
       className
     )}
     {...props}
@@ -22,7 +22,7 @@ const Card = React.forwardRef<
     {image && (
       <Image
         source={typeof image === 'string' ? { uri: image } : image}
-        className="w-full h-32 rounded-t-lg"
+        className="w-full h-32 rounded-t-md"
       />
     )}
     {props.children}

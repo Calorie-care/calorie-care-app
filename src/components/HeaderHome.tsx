@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { LogOut } from '@/lib/icons'
 
 import { useClerk, useUser } from '@clerk/clerk-expo'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export function HeaderHome() {
   const { user } = useUser()
@@ -16,7 +17,7 @@ export function HeaderHome() {
     : ''
 
   return (
-    <View className="flex-row bg-primary pt-12 pb-4 px-8 items-center">
+    <SafeAreaView className="flex-row items-center px-8 bg-primary pb-4 pt-6">
       <View className="flex-1 flex-row gap-4 items-center">
         {user?.hasImage ? (
           <Avatar alt="Avatar">
@@ -38,6 +39,6 @@ export function HeaderHome() {
       <TouchableOpacity>
         <LogOut className="text-secondary" onPress={() => signOut()} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   )
 }

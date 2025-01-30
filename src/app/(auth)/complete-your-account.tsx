@@ -1,9 +1,12 @@
-import { View, type TextInput } from 'react-native'
+import { View, Image, type TextInput, ScrollView } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'expo-router'
 import { useUser } from '@clerk/clerk-expo'
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+
+import background from '@/assets/bg-complete-your-account.png'
 
 import { RadioButtonInput } from '@/components/RadioButtonInput'
 import { Input } from '@/components/ui/input'
@@ -109,59 +112,73 @@ export default function CompleteYourAccount() {
   }, [isLoaded, user])
 
   return (
-    <SafeAreaView className="px-8 py-4 gap-4">
-      <View className="gap-4 py-8">
-        <Text className="text-2xl font-medium">Complete sua conta</Text>
-        <Text className="text-muted-foreground text-lg leading-tight">
-          Complete sua conta para começar a usar o aplicativo de forma completa
-        </Text>
-      </View>
+    <KeyboardAwareScrollView
+      contentContainerClassName="flex-grow bg-background"
+      extraHeight={100}
+      enableOnAndroid={true}
+      keyboardShouldPersistTaps="handled"
+    >
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <SafeAreaView className="flex-1 px-8 py-16 justify-center gap-4 bg-background">
+          <View className="gap-4">
+            <Text className="text-2xl font-medium">Complete sua conta</Text>
+            <Text className="text-muted-foreground text-lg leading-tight">
+              Informe seus dados para personalizar sua experiência
+            </Text>
+          </View>
 
-      <View>
-        <Input
-          control={control}
-          name="full_name"
-          label="Nome completo *"
-          placeholder="Seu nome completo"
-          returnKeyType="next"
-          onSubmitEditing={() => birthdateRef.current?.focus()}
-        />
+          <View className="items-center justify-center">
+            <Image className="h-56 w-56" source={background} />
+          </View>
 
-        <Input
-          control={control}
-          name="birthdate"
-          label="Data de nascimento *"
-          placeholder="DD/MM/AAAA"
-          onChangeText={text => {
-            const maskedText = applyDateMask(text)
-            setValue('birthdate', maskedText)
-          }}
-          keyboardType="numeric"
-          ref={birthdateRef}
-          returnKeyType="done"
-        />
+          <View>
+            <Input
+              control={control}
+              name="full_name"
+              label="Nome completo *"
+              placeholder="Seu nome completo"
+              autoCapitalize="words"
+              returnKeyType="next"
+              onSubmitEditing={() => birthdateRef.current?.focus()}
+            />
 
-        <RadioButtonInput
-          control={control}
-          label="Gênero *"
-          required
-          name="gender"
-          options={[
-            { label: 'Masculino', value: 'male' },
-            { label: 'Feminino', value: 'female' },
-            { label: 'Outro', value: 'other' },
-          ]}
-        />
+            <Input
+              control={control}
+              name="birthdate"
+              label="Data de nascimento *"
+              placeholder="DD/MM/AAAA"
+              onChangeText={text => {
+                const maskedText = applyDateMask(text)
+                setValue('birthdate', maskedText)
+              }}
+              keyboardType="numeric"
+              ref={birthdateRef}
+              returnKeyType="done"
+            />
 
-        <View className="py-8">
-          <Button
-            onPress={handleSubmit(handleUpdateProfile)}
-            isLoading={isLoading}
-          >
-            <Text>Finalizar</Text>
-          </Button>
-        </View>
-      </View>
-    </SafeAreaView>
+            <RadioButtonInput
+              control={control}
+              label="Gênero *"
+              required
+              name="gender"
+              options={[
+                { label: 'Masculino', value: 'male' },
+                { label: 'Feminino', value: 'female' },
+                { label: 'Outro', value: 'other' },
+              ]}
+            />
+          </View>
+
+          <View className="mt-8">
+            <Button
+              onPress={handleSubmit(handleUpdateProfile)}
+              isLoading={isLoading}
+            >
+              <Text>Finalizar</Text>
+            </Button>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+    </KeyboardAwareScrollView>
   )
 }
