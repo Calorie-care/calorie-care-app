@@ -111,19 +111,18 @@ export default function CreateDiet() {
   }
 
   function handleCreateDiet(data: FormData) {
-    if (currentStep === 'personal-info') {
-      handleNextStep()
-    } else {
-      // handleCreateDiet(data)
-      router.push('/resume')
-    }
-
     const completeData = {
       ...getValues(),
       ...data,
     }
 
     console.log(completeData)
+
+    if (currentStep === 'personal-info') {
+      handleNextStep()
+    } else {
+      // router.push('/resume')
+    }
   }
 
   function renderPersonalInfoStep() {
