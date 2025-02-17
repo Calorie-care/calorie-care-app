@@ -17,12 +17,14 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Header } from '@/components/Header'
 
+import { useDataStorage } from '@/storage/data'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router } from 'expo-router'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ArrowRight, Check } from 'lucide-react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useUser } from '@clerk/clerk-expo'
 
 const personalInfoSchema = z.object({
   objective: z.string().min(1, { message: 'Selecione o seu objetivo' }),
@@ -43,6 +45,8 @@ type PreferencesData = z.infer<typeof preferencesSchema>
 type FormData = PersonalInfoData & PreferencesData
 
 export default function CreateDiet() {
+  const { user } = useUser()
+
   const [currentStep, setCurrentStep] = useState<
     'personal-info' | 'preferences'
   >('personal-info')
@@ -63,6 +67,8 @@ export default function CreateDiet() {
       currentStep === 'personal-info' ? personalInfoSchema : preferencesSchema
     ),
   })
+
+  const { setPersonalInfos } = useDataStorage(state => state)
 
   const levelOptions = [
     {
@@ -114,14 +120,16 @@ export default function CreateDiet() {
     const completeData = {
       ...getValues(),
       ...data,
+      name: user?.fullName || '',
+      gender: user?.unsafeMetadata.gender === 'male' ? 'Masculino' : 'Feminino',
     }
-
-    console.log(completeData)
 
     if (currentStep === 'personal-info') {
       handleNextStep()
     } else {
-      // router.push('/resume')
+      setPersonalInfos(completeData)
+
+      router.push('/resume')
     }
   }
 

@@ -17,6 +17,8 @@ import { env } from '@/env'
 import { tokenCache } from '@/storage/tokenCache'
 import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/lib/react-query'
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -99,7 +101,9 @@ export default function RootLayout() {
       <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
         <ClerkLoaded>
           <GestureHandlerRootView className="flex-1">
-            <InitialLayout />
+            <QueryClientProvider client={queryClient}>
+              <InitialLayout />
+            </QueryClientProvider>
           </GestureHandlerRootView>
         </ClerkLoaded>
       </ClerkProvider>

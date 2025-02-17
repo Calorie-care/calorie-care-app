@@ -19,10 +19,15 @@ export interface CreateNutritionResponse {
   altura: number
   peso: number
   objetivo: string
+  quantidadeRefeicoes: number
+  calorias: number
   refeicoes: {
     horario: string
     nome: string
     alimentos: string[]
+    proteinas: string
+    carboidratos: string
+    gorduras: string
     kcal: string
   }[]
   suplementos: {
