@@ -1,3 +1,5 @@
+import { NAV_THEME } from '@/lib/constants'
+import { useColorScheme } from '@/lib/useColorScheme'
 import { useAuth, useUser } from '@clerk/clerk-expo'
 import { Redirect, Tabs } from 'expo-router'
 import { Apple, House, Soup } from 'lucide-react-native'
@@ -5,6 +7,9 @@ import { Apple, House, Soup } from 'lucide-react-native'
 export default function TabLayout() {
   const { user } = useUser()
   const { isSignedIn } = useAuth()
+
+  const { colorScheme } = useColorScheme()
+  const theme = NAV_THEME[colorScheme === 'dark' ? 'dark' : 'light']
 
   if (!isSignedIn) {
     return <Redirect href="/(auth)" />
@@ -18,13 +23,18 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        // tabBarActiveTintColor: '#FFF',
-        // tabBarInactiveTintColor: '#E4E4E7',
-        // tabBarStyle: {
-        //   backgroundColor: '#14a34a',
-        //   borderTopColor: '#F0F0F0',
-        //   borderTopWidth: 1,
-        // },
+        tabBarActiveTintColor: theme.primary,
+        tabBarInactiveTintColor: theme['muted-foreground'],
+        tabBarStyle: {
+          backgroundColor: theme.card,
+          borderTopColor: theme.border,
+          borderTopWidth: 1,
+          height: 64,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          marginBottom: 6,
+        },
       }}
     >
       <Tabs.Screen

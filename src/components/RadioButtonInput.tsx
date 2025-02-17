@@ -36,7 +36,7 @@ export function RadioButtonInput({
         onPress={() => onChange(value)}
       >
         <Text
-          className={`text-base ${isSelected ? 'text-white' : 'text-black'}`}
+          className={`text-lg ${isSelected ? 'text-background' : 'text-muted-foreground'}`}
         >
           {label}
         </Text>

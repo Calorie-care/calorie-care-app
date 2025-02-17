@@ -1,10 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 
 import { Header } from '@/components/Header'
 import { Text } from '@/components/ui/text'
@@ -24,11 +18,7 @@ export default function Resume() {
     : ''
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}
-    >
+    <View className="flex-grow bg-background">
       <Header
         title="Sua dieta"
         label={
@@ -38,15 +28,12 @@ export default function Resume() {
         }
       />
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        className="flex-1 bg-background"
-      >
-        <View className="px-8 py-4 gap-4">
+      <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+        <View className="p-4 gap-4">
           <Card className="p-2">
             <View className="flex-1 flex-row gap-4 items-center">
               {user?.hasImage ? (
-                <Avatar alt="Avatar">
+                <Avatar className="w-16 h-16" alt="Avatar">
                   <AvatarImage source={{ uri: user?.imageUrl }} />
                 </Avatar>
               ) : (
@@ -57,14 +44,16 @@ export default function Resume() {
                 </Avatar>
               )}
               <View>
-                <Text className="text-lg">{user?.fullName}</Text>
-                <Text className="text-lg">Objetivo: Emagrecimento</Text>
+                <Text className="text-lg font-medium">{user?.fullName}</Text>
+                <Text>Objetivo: Emagrecimento</Text>
+                <Text>2000 kcal em 3 refeições</Text>
               </View>
             </View>
           </Card>
 
           <MealCard
             meal="☕  Café da manhã"
+            cal="350"
             protein="14G"
             fats="8G"
             carbs="12G"
@@ -72,6 +61,7 @@ export default function Resume() {
           />
           <MealCard
             meal="🍽️  Almoço"
+            cal="1000"
             protein="20G"
             fats="30G"
             carbs="32G"
@@ -83,6 +73,7 @@ export default function Resume() {
           />
           <MealCard
             meal="🥞  Jantar"
+            cal="700"
             protein="21G"
             fats="17G"
             carbs="22G"
@@ -93,7 +84,7 @@ export default function Resume() {
             ]}
           />
 
-          <Button variant="secondary" onPress={() => router.replace('/(tabs)')}>
+          <Button variant="ghost" onPress={() => router.replace('/(tabs)')}>
             <Text>Voltar</Text>
           </Button>
         </View>
@@ -101,6 +92,6 @@ export default function Resume() {
           Altere sua dieta conforme a sua necessidade
         </Text>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </View>
   )
 }

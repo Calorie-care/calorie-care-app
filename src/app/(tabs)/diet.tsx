@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import type { TextInput } from 'react-native'
 
 import { ChevronDown } from '@/lib/icons'
@@ -22,6 +22,7 @@ import { router } from 'expo-router'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ArrowRight, Check } from 'lucide-react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const personalInfoSchema = z.object({
   objective: z.string().min(1, { message: 'Selecione o seu objetivo' }),
@@ -129,7 +130,7 @@ export default function CreateDiet() {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        className="px-8 py-4 bg-background"
+        className="p-4 bg-background"
       >
         <View className="gap-3 mb-2">
           <Controller
@@ -285,7 +286,7 @@ export default function CreateDiet() {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        className="px-8 py-4 bg-background"
+        className="p-4 bg-background"
       >
         <View>
           <Input
@@ -374,10 +375,11 @@ export default function CreateDiet() {
   }
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}
+    <KeyboardAwareScrollView
+      contentContainerClassName="flex-grow bg-background"
+      extraHeight={100}
+      enableOnAndroid={true}
+      keyboardShouldPersistTaps="handled"
     >
       <Header
         title="Gerar dieta"
@@ -405,6 +407,6 @@ export default function CreateDiet() {
         icon={currentStep === 'personal-info' ? ArrowRight : Check}
         iconSize={32}
       />
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   )
 }
