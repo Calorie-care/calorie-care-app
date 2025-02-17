@@ -29,7 +29,8 @@ export const RECIPES = [
   {
     id: 2,
     title: 'Cookie americano',
-    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
+    image:
+      'https://static.itdg.com.br/images/640-440/c850a535e8de2a4793622a50a858a6d3/shutterstock-1488059969.jpg',
     cal: '300',
     duration: '40',
     proteins: '5',
@@ -55,7 +56,8 @@ export const RECIPES = [
   {
     id: 3,
     title: 'Salada proteica',
-    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
+    image:
+      'https://receitadaboa.com.br/wp-content/uploads/2024/08/Imagem-ilustrativa-de-salada-de-frango-scaled.webp',
     cal: '400',
     duration: '20',
     proteins: '22',
@@ -81,7 +83,8 @@ export const RECIPES = [
   {
     id: 4,
     title: 'Strogonoff de Carne',
-    image: 'https://i.ibb.co/yYY8Gnk/image-4.png',
+    image:
+      'https://receitatodahora.com.br/wp-content/uploads/2022/09/strogonoff-de-carne-1200x675.jpg',
     cal: '500',
     duration: '60',
     proteins: '32',
